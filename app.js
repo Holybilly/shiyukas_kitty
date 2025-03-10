@@ -4,12 +4,17 @@ const supabaseKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZS
 const supabase = supabase.createClient(supabaseUrl, supabaseKey);
 
 // Form submission
-document.getElementById('paymentForm').addEventListener('submit', async (e) => {
-  e.preventDefault();
-
+// document.getElementById('paymentForm').addEventListener('submit', async (e) => {
+  // e.preventDefault();
+async function savePayment(){
   const name = document.getElementById('name').value;
   const amount = parseFloat(document.getElementById('amount').value);
   const mpesaReference = document.getElementById('mpesaReference').value;
+
+  if(name == '' || amount == '' || mpesaReference == ''){
+    alert('Please fill all the required fields!')
+    return
+  }
 
   // Insert payment into Supabase
   const { data, error } = await supabase
@@ -23,7 +28,7 @@ document.getElementById('paymentForm').addEventListener('submit', async (e) => {
     document.getElementById('paymentForm').reset();
     fetchReports();
   }
-});
+}
 
 // Fetch and display reports
 async function fetchReports() {
