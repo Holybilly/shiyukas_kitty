@@ -1,19 +1,18 @@
 // Replace with your Supabase URL and API key
-const supabaseUrl = 'https://rxgxpkxuzausrkzyzhqd.supabase.co';
-const supabaseKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InJ4Z3hwa3h1emF1c3Jrenl6aHFkIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDE0MjAwMzYsImV4cCI6MjA1Njk5NjAzNn0.rKdMxZfzxulyNWeoMvxlRbeCo8FFfZz18IZjTHzvHlY';
-const supabase = supabase.createClient(supabaseUrl, supabaseKey);
+// Initialize Supabase (use supabase directly from the CDN)
+const supabase = window.supabase.createClient(
+  'https://rxgxpkxuzausrkzyzhqd.supabase.co',
+  'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InJ4Z3hwa3h1emF1c3Jrenl6aHFkIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDE0MjAwMzYsImV4cCI6MjA1Njk5NjAzNn0.rKdMxZfzxulyNWeoMvxlRbeCo8FFfZz18IZjTHzvHlY'
+);
 
-// Form submission
-// document.getElementById('paymentForm').addEventListener('submit', async (e) => {
-  // e.preventDefault();
-async function savePayment(){
+async function savePayment() {
   const name = document.getElementById('name').value;
   const amount = parseFloat(document.getElementById('amount').value);
   const mpesaReference = document.getElementById('mpesaReference').value;
 
-  if(name == '' || amount == '' || mpesaReference == ''){
-    alert('Please fill all the required fields!')
-    return
+  if (name === '' || amount === '' || mpesaReference === '') {
+    alert('Please fill all the required fields!');
+    return;
   }
 
   // Insert payment into Supabase
@@ -25,7 +24,11 @@ async function savePayment(){
     alert('Error submitting payment: ' + error.message);
   } else {
     alert('Payment submitted successfully!');
-    document.getElementById('paymentForm').reset();
+    
+    // reset form
+  document.getElementById('name').value = ''
+  document.getElementById('mpesaReference').value = ''
+    
     fetchReports();
   }
 }
